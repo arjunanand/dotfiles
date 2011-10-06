@@ -1,0 +1,1 @@
+alias cci="git push git@github.com:crowdtap/crowdtap-builder.git"

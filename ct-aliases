@@ -1,1 +1,3 @@
+alias ct="cd ~/work/crowdtap"
+alias sn="cd ~/work/sniper"
 alias cci="git push git@github.com:crowdtap/crowdtap-builder.git"

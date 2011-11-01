@@ -33,3 +33,6 @@
 	autosetuprebase = always
 [push]
 	default = tracking
+[user]
+	name = Arjun Anand
+	email = arjun.anand84@gmail.com

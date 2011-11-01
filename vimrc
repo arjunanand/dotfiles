@@ -203,7 +203,7 @@ let mapleader = ","
 nmap <leader>v :tabedit $MYVIMRC<CR>
 
 " git blame
-vmap <Leader>g :<C-U>!/usr/local/git/bin/git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+vmap <Leader>g :<C-U>!/usr/local/bin/git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 
 if has("autocmd")
   autocmd bufwritepost .vimrc source $MYVIMRC

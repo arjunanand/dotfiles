@@ -142,6 +142,10 @@ set list listchars=tab:»·,trail:·
 command! Rroutes :e config/routes.rb
 command! RTroutes :tabe config/routes.rb
 
+" Edit factories
+command! Rfactories :e spec/factories.rb
+command! RTfactories :tabe spec/factories.rb
+
 " Local config
 if filereadable(".vimrc.local")
   source .vimrc.local

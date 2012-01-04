@@ -1,7 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/Users/arjuna/work/crowdtap/features'
-let g:netrw_dirhist_2='/Users/arjuna/work/crowdtap'
-let g:netrw_dirhist_3='/Users/arjuna/work/crowdtap/features'
-let g:netrw_dirhist_4='/Users/arjuna/.rvm/gems/ruby-1.9.2-p180/gems/resque_mailer-2.0.2'
-let g:netrw_dirhist_5='/Users/arjuna/.rvm/gems/ruby-1.9.2-p180/gems/resque_mailer-2.0.2/lib'
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/Users/arjuna/Mobile/FBlogin/Resources/CoffeeScript'
+let g:netrw_dirhist_2='/Users/arjuna/Mobile/FBlogin/Resources/CoffeeScript/lib'
+let g:netrw_dirhist_3='/Users/arjuna/work/crowdtap'

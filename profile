@@ -2,7 +2,7 @@ export PATH="~/.homebrew/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 #export PATH="$PATH:/usr/local/mongodb/bin:/usr/local/apache2/bin"
 export AUTOFEATURE=true
-export VIM_APP_DIR="/Users/arjuna/Downloads/MacVim-snapshot-62"
+export VIM_APP_DIR="/Users/arjun/apps/MacVim-snapshot-64"
 # Finished adapting your PATH environment variable for use with MacPorts.
 
 source ~/.git-completion.sh

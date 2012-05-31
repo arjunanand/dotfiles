@@ -75,7 +75,7 @@ set expandtab
 set laststatus=2
 
 " \ is the leader character
-let mapleader = "\\"
+let mapleader = ","
 
 " Edit the README_FOR_APP (makes :R commands work)
 map <Leader>R :e doc/README_FOR_APP<CR>
@@ -178,6 +178,8 @@ let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
 " Window navigation
 nmap <C-J> <C-W><C-J>
 nmap <C-K> <C-W><C-K>
+nmap <C-H> <C-W><C-H>
+nmap <C-L> <C-W><C-L>
 nmap <F2> :mksession! ~/.vim_session <CR> " Quick write session with F2
 nmap <F3> :source ~/.vim_session <CR>     " And load session with F3
 
@@ -203,7 +205,6 @@ if has("gui_running")
   "set gfn=Bitstream\ Vera\ Sans\ Mono:h24
 endif
 
-let mapleader = ","
 nmap <leader>v :tabedit $MYVIMRC<CR>
 
 " git blame

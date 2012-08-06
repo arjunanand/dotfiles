@@ -3,6 +3,7 @@ export PATH="/usr/local/bin:$PATH"
 #export PATH="$PATH:/usr/local/mongodb/bin:/usr/local/apache2/bin"
 export AUTOFEATURE=true
 export VIM_APP_DIR="/Users/arjun/apps/MacVim-snapshot-64"
+export GIT_PS1_SHOWUPSTREAM="auto"
 # Finished adapting your PATH environment variable for use with MacPorts.
 
 source ~/.git-completion.sh

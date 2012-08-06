@@ -4,6 +4,7 @@ export PATH="/usr/local/bin:$PATH"
 export AUTOFEATURE=true
 export VIM_APP_DIR="/Users/arjun/apps/MacVim-snapshot-64"
 export GIT_PS1_SHOWUPSTREAM="auto"
+export GIT_PS1_SHOWDIRTYSTATE=1
 # Finished adapting your PATH environment variable for use with MacPorts.
 
 source ~/.git-completion.sh

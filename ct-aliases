@@ -1,3 +1,5 @@
 alias ct="cd ~/work/crowdtap"
+alias cam="cd ~/work/crowdtap.action-management"
+alias cmh="cd ~/work/crowdtap.member-home"
 alias sn="cd ~/work/sniper"
 alias cci="git push kareemk@ci.crowdtap.com:/Volumes/SSD/git-repos/crowdtap-builder.git"

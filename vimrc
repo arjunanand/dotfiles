@@ -74,7 +74,7 @@ set expandtab
 " Always display the status line
 set laststatus=2
 
-" \ is the leader character
+" , is the leader character
 let mapleader = ","
 
 " Edit the README_FOR_APP (makes :R commands work)
@@ -212,7 +212,10 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 vmap <Leader>g :<C-U>!/usr/local/bin/git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 
 " align :
-vmap <Leader>a :Tabularize/:\zs<CR>
+vmap <Leader>ac :Tabularize/:\zs<CR>
+
+" align =>
+vmap <Leader>aa :Tabularize/=><CR>
 
 if has("autocmd")
   autocmd bufwritepost .vimrc source $MYVIMRC

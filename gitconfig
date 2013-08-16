@@ -29,6 +29,7 @@
 	untracked = cyan
 [core]
 	editor = vim
+ excludesfile = /opt/boxen/config/git/gitignore
 [branch]
 	autosetuprebase = always
 [push]
@@ -36,3 +37,9 @@
 [user]
 	name = Arjun Anand
 	email = arjun.anand84@gmail.com
+
+[credential]
+helper = /opt/boxen/bin/boxen-git-credential
+
+[hub]
+protocol = https

@@ -209,13 +209,13 @@ endif
 nmap <leader>v :tabedit $MYVIMRC<CR>
 
 " git blame
-vmap <Leader>g :<C-U>!/usr/local/bin/git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+vmap <Leader>g :<C-U>!/opt/boxen/homebrew/bin/git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 
 " align :
-vmap <Leader>ac :Tabularize/:\zs<CR>
+" vmap <Leader>ac :Tabularize/:\zs<CR>
 
 " align =>
-vmap <Leader>aa :Tabularize/=><CR>
+" vmap <Leader>aa :Tabularize/=><CR>
 
 if has("autocmd")
   autocmd bufwritepost .vimrc source $MYVIMRC
@@ -224,3 +224,12 @@ endif
 " folding
 vmap <space> zf
 nmap <space> zd
+
+" do not highlight search terms
+set nohlsearch
+
+" disable syntastic warnings
+let g:syntastic_quiet_warnings = 0
+
+" set wrapscan for searching
+set wrapscan

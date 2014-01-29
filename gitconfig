@@ -5,7 +5,7 @@
 	co = checkout
 	df = diff
 	dc = diff --cached
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>;%Creset' --abbrev-commit
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit
 	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 	ls = ls-files
@@ -33,7 +33,7 @@
 [branch]
 	autosetuprebase = always
 [push]
-	default = tracking
+	default = simple
 [user]
 	name = Arjun Anand
 	email = arjun.anand84@gmail.com
@@ -43,3 +43,96 @@ helper = /opt/boxen/bin/boxen-git-credential
 
 [hub]
 protocol = https
+
+[color "branch"]
+current = yellow reverse
+
+[color "diff"]
+frag = magenta bold
+
+[color "status"]
+changed = green
+
+[color "diff"]
+meta = yellow bold
+
+[color "diff"]
+old = red bold
+
+[color "branch"]
+remote = green
+
+[color "branch"]
+local = yellow
+
+[ui]
+color = auto
+
+[color "diff"]
+new = green bold
+
+[color "status"]
+untracked = cyan
+
+[color "status"]
+added = yellow
+
+[color "branch"]
+current = yellow reverse
+
+[color "diff"]
+frag = magenta bold
+
+[color "status"]
+changed = green
+
+[color "diff"]
+meta = yellow bold
+
+[color "diff"]
+old = red bold
+
+[color "branch"]
+remote = green
+
+[color "branch"]
+local = yellow
+
+[color "diff"]
+new = green bold
+
+[color "status"]
+untracked = cyan
+
+[color "status"]
+added = yellow
+
+[color "branch"]
+current = yellow reverse
+
+[color "diff"]
+frag = magenta bold
+
+[color "status"]
+changed = green
+
+[color "diff"]
+meta = yellow bold
+
+[color "diff"]
+old = red bold
+
+[color "branch"]
+remote = green
+
+[color "branch"]
+local = yellow
+
+[color "diff"]
+new = green bold
+
+[color "status"]
+untracked = cyan
+
+[color "status"]
+added = yellow

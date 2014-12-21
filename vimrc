@@ -221,3 +221,20 @@ endif
 " folding
 vmap <space> zf
 nmap <space> zd
+
+let g:rspec_command = "!bundle exec rspec --drb {spec}"
+
+" Vundle
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+
+Bundle 'thoughtbot/vim-rspec'
+
+filetype plugin indent on

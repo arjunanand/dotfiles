@@ -157,7 +157,7 @@ if executable("ack")
 endif
 
 " Color scheme
-colorscheme vividchalk
+" colorscheme vividchalk
 highlight NonText guibg=#060606
 highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
@@ -229,7 +229,7 @@ nmap <space> zd
 set nohlsearch
 
 " disable syntastic warnings
-let g:syntastic_quiet_warnings = 0
+let g:syntastic_quiet_messages = {'level': 'warnings'}
 
 " set wrapscan for searching
 set wrapscan

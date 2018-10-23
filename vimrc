@@ -1,235 +1,325 @@
-" Use Vim settings, rather then Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-set nocompatible
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
 
-set nobackup
-set nowritebackup
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
-" Don't use Ex mode, use Q for formatting
-map Q gq
+"""""""""""""""""""""""""
+" Vim Plugins
+"""""""""""""""""""""""""
 
-" This is an alternative that also works in block mode, but the deleted
-" text is lost and it only works for putting the current register.
-"vnoremap p "_dp
+" appearance
+Plugin 'nviennot/molokai'
 
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
-  syntax on
-  set nohlsearch
+" editing
+Plugin 'godlygeek/tabular'
+Plugin 'kana/vim-textobj-user'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'sjl/gundo.vim'
+Plugin 'vim-scripts/YankRing.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'tmhedberg/matchit'
+
+" navigation
+Plugin 'kien/ctrlp.vim'
+Plugin 'ervandew/supertab'
+Plugin 'rking/ag.vim'
+Plugin 'scrooloose/nerdtree'
+
+" languages
+Plugin 'AndrewRadev/vim-eco'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'groenewege/vim-less'
+Plugin 'pangloss/vim-javascript'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'nelstrom/vim-textobj-rubyblock'
+Plugin 'yaymukund/vim-rabl'
+Plugin 'tpope/vim-endwise'
+Plugin 'tomlion/vim-solidity'
+
+" frameworks
+Plugin 'tpope/vim-rails'
+Plugin 'burnettk/vim-angular'
+Plugin 'othree/html5.vim'
+Plugin 'quentindecock/vim-cucumber-align-pipes'
+
+" misc
+Plugin 'vim-airline/vim-airline'
+Plugin 'mattn/gist-vim'
+Plugin 'mattn/webapi-vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tomtom/quickfixsigns_vim'
+
+" Plugins you want just for yourself go here
+if filereadable(expand("~/.custom.vim-plugins"))
+  source ~/.custom.vim-plugins
 endif
 
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
 
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
+"""""""""""""""""""""""""
+" Basic features
+"""""""""""""""""""""""""
+" Display options
+syntax on
+set nocursorline
+set number
+set list!                       " Display unprintable characters
+set listchars=tab:▸\ ,trail:•,extends:»,precedes:«
+if $TERM =~ '256color'
+  set t_Co=256
+elseif $TERM =~ '^xterm$'
+  set t_Co=256
+endif
+colorscheme molokai
 
-  " Put these in an autocmd group, so that we can delete them easily.
-  augroup vimrcEx
-  au!
+" Misc
+set hidden                      " Don't abandon buffers moved to the background
+set wildmenu                    " Enhanced completion hints in command line
+set wildmode=list:longest,full  " Complete longest common match and show possible matches and wildmenu
+set backspace=eol,start,indent  " Allow backspacing over indent, eol, & start
+set complete=.,w,b,u,U,t,i,d    " Do lots of scanning on tab completion
+set updatecount=100             " Write swap file to disk every 100 chars
+set directory=~/.vim/swap       " Directory to use for the swap file
+set diffopt=filler,iwhite       " In diff mode, ignore whitespace changes and align unchanged lines
+set history=1000                " Remember 1000 commands
+set scrolloff=3                 " Start scrolling 3 lines before the horizontal window border
+set visualbell t_vb=            " Disable error bells
+set shortmess+=A                " Always edit file, even when swap file is found
+set directory=/tmp "sets the swap (.swp) file directory
 
-  " For all text files set 'textwidth' to 110 characters.
-  autocmd FileType text setlocal textwidth=110
+" up/down on displayed lines, not real lines. More useful than painful.
+noremap k gk
+noremap j gj
 
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif
-
-  augroup END
-
-else
-
-  set autoindent		" always set autoindenting on
-
-endif " has("autocmd")
-
-" if has("folding")
-  " set foldenable
-  " set foldmethod=syntax
-  " set foldlevel=1
-  " set foldnestmax=2
-  " set foldtext=strpart(getline(v:foldstart),0,50).'\ ...\ '.substitute(getline(v:foldend),'^[\ #]*','','g').'\ '
-" endif
-
-" Softtabs, 2 spaces
+" Formatting, indentation and tabbing
+set autoindent smartindent
+set smarttab                    " Make <tab> and <backspace> smarter
+set expandtab
 set tabstop=2
 set shiftwidth=2
-set expandtab
+set textwidth=80
+set formatoptions-=t formatoptions+=croql
 
-" Always display the status line
+" viminfo: remember certain things when we exit
+" (http://vimdoc.sourceforge.net/htmldoc/usr_21.html)
+"   %    : saves and restores the buffer list
+"   '100 : marks will be remembered for up to 30 previously edited files
+"   /100 : save 100 lines from search history
+"   h    : disable hlsearch on start
+"   "500 : save up to 500 lines for each register
+"   :1000 : up to 1000 lines of command-line history will be remembered
+"   n... : where to save the viminfo files
+set viminfo=%100,'100,/100,h,\"500,:1000,n~/.vim/viminfo
+
+" ctags: recurse up to home to find tags.
+set tags+=tags;$HOME
+
+" Undo
+set undolevels=10000
+if has("persistent_undo")
+  set undodir=~/.vim/undo       " Allow undoes to persist even after a file is closed
+  set undofile
+endif
+
+" Search settings
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+set showmatch
+
+" to_html settings
+let html_number_lines = 1
+let html_ignore_folding = 1
+let html_use_css = 1
+let xml_use_xhtml = 1
+
+" When opening a file, always jump to the last cursor position
+autocmd BufReadPost *
+    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+    \     exe "normal g'\"zz" |
+    \ endif |
+
+
+" After 4s of inactivity, check for external file modifications on next keyrpress
+au CursorHold * checktime
+
+"""""""""""""""""""""""""
+" Keybindings
+"""""""""""""""""""""""""
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+let mapleader=","
+let localmapleader=","
+
+nmap <Leader>s :%S/
+vmap <Leader>s :S/
+
+vnoremap . :normal .<CR>
+vnoremap @ :normal! @
+
+" Toggles
+set pastetoggle=<F1>
+" the nmap is just for quicker powerline feedback
+nmap <silent> <F1>      :set invpaste<CR>
+nmap          <F2>      :setlocal spell!<CR>
+imap          <F2> <C-o>:setlocal spell!<CR>
+nmap <silent> <F3>      :set invwrap<CR>
+" TODO toggle numbers
+
+map <Leader>/ :nohlsearch<cr>
+map <Home> :tprev<CR>
+map <End>  :tnext<CR>
+
+" TODO Do also cnext and cprev as a fallback
+map <PageDown> :lnext<CR>
+map <PageUp>   :lprev<CR>
+
+" Make Y consistent with D and C
+function! YRRunAfterMaps()
+  nnoremap <silent> Y :<C-U>YRYankCount 'y$'<CR>
+endfunction
+
+" Disable K for manpages - not used often and easy to accidentally hit
+noremap K k
+
+" Resize window splits
+" TODO Fix mousewheel
+nnoremap <Up>    3<C-w>-
+nnoremap <Down>  3<C-w>+
+nnoremap <Left>  3<C-w><
+nnoremap <Right> 3<C-w>>
+
+nnoremap _ :split<cr>
+nnoremap \| :vsplit<cr>
+
+map <Leader>w :set invwrap<cr>
+map <Leader>p :set invpaste<cr>
+
+vmap s :!sort<CR>
+vmap u :!sort -u<CR>
+
+" Write file when you forget to use sudo
+cmap w!! w !sudo tee % >/dev/null
+
+"""""""""""""""""""""""""
+" Plugins
+"""""""""""""""""""""""""
+nnoremap <Leader>b :BufSurfBack<cr>
+nnoremap <Leader>f :BufSurfForward<cr>
+
+nnoremap <S-u> :GundoToggle<CR>
+let g:gundo_close_on_revert=1
+
+
+" TODO Merge the NERDTreeFind with Toggle inteilligently.
+nnoremap <C-g> :NERDTreeToggle<cr>
+nnoremap <C-f> :NERDTreeFind<cr>
+
+let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$', '\.o$',
+                   \ '\.so$', '\.egg$', '^\.git$', '\.cmi', '\.cmo' ]
+let NERDTreeHighlightCursorline=1
+let NERDTreeShowBookmarks=1
+let NERDTreeShowFiles=1
+
+map <silent> <Leader>gd :Gdiff<CR>
+map <silent> <Leader>gb :Gblame<CR>
+map <silent> <Leader>gg :Gbrowse<CR>
+
+nnoremap <Leader>a :Ag
+
+" Put a space around comment markers
+let g:NERDSpaceDelims = 1
+
+nnoremap <C-y> :YRShow<cr>
+let g:yankring_history_dir = '$HOME/.vim'
+let g:yankring_manual_clipboard_check = 0
+
+let g:syntastic_enable_signs = 1
+let g:syntastic_mode_map = { 'mode': 'active',
+                           \ 'active_filetypes': [],
+                           \ 'passive_filetypes': ['c', 'scss', 'html', 'scala'] }
+let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_css_checkers = ['stylelint']
+let g:syntastic_less_checkers = ['stylelint']
+
+let g:quickfixsigns_classes=['qfl', 'vcsdiff', 'breakpoints']
+
 set laststatus=2
 
-" , is the leader character
-let mapleader = ","
+let g:ctrlp_map = '<Leader>.'
+let g:ctrlp_custom_ignore = '/\.\|\.o\|\.so'
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_regexp = 1
+let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files']
+map <Leader>, :CtrlPMRU<CR>
 
-" Edit the README_FOR_APP (makes :R commands work)
-map <Leader>R :e doc/README_FOR_APP<CR>
+noremap \= :Tabularize /=<CR>
+noremap \: :Tabularize /^[^:]*:\zs/l0l1<CR>
+noremap \> :Tabularize /=><CR>
+noremap \, :Tabularize /,\zs/l0l1<CR>
+noremap \{ :Tabularize /{<CR>
+noremap \\| :Tabularize /\|<CR>
+noremap \& :Tabularize /\(&\\|\\\\\)<CR>
 
-" Leader shortcuts for Rails commands
-map <Leader>m :Rmodel 
-map <Leader>c :Rcontroller 
-map <Leader>v :Rview 
-map <Leader>u :Runittest 
-map <Leader>f :Rfunctionaltest 
-map <Leader>i :Rintegrationtest 
-map <Leader>h :Rhelper 
-map <Leader>tm :RTmodel 
-map <Leader>tc :RTcontroller 
-map <Leader>tv :RTview 
-map <Leader>tu :RTunittest 
-map <Leader>tf :RTfunctionaltest 
-map <Leader>sm :RSmodel 
-map <Leader>sc :RScontroller 
-map <Leader>sv :RSview 
-map <Leader>su :RSunittest 
-map <Leader>sf :RSfunctionaltest 
-map <Leader>si :RSintegrationtest 
+nmap <leader>gi :Gist
+let g:gist_post_private = 1
+let g:gist_open_browser_after_post = 1
 
-" Hide search highlighting
-map <Leader>l :set invhls <CR>
+"""""""""""""""""""""""""
+" Cscope
+"""""""""""""""""""""""""
+if has("cscope")
+  " Use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
+  set cscopetag
 
-" Opens an edit command with the path of the currently edited file filled in
-" Normal mode: <Leader>e
-"map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+  " Check cscope for definition of a symbol before checking ctags. Set to 1 if
+  " you want the reverse search order.
+  set csto=0
 
-" Opens a tab edit command with the path of the currently edited file filled in
-" Normal mode: <Leader>t
-map <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+  " Add any cscope database in current directory
+  if filereadable("cscope.out")
+    cs add cscope.out
+  endif
 
-" Inserts the path of the currently edited file into a command
-" Command mode: Ctrl+P
-cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
+  " Show msg when any other cscope db is added
+  set cscopeverbose
+end
 
-" Maps autocomplete to tab
-imap <Tab> <C-P>
-
-" Duplicate a selection
-" Visual mode: D
-vmap D y'>p
-
-" For Haml
-au! BufRead,BufNewFile *.haml         setfiletype haml
-
-" No Help, please
-nmap <F1> <Esc>
-
-" Press ^F from insert mode to insert the current file name
-imap <C-F> <C-R>=expand("%")<CR>
-
-" Press Shift+P while in visual mode to replace the selection without
-" overwriting the default register
-vmap P p :call setreg('"', getreg('0')) <CR>
-
-" Display extra whitespace
-set list listchars=tab:»·,trail:·
-
-" Edit routes
-command! Rroutes :e config/routes.rb
-command! RTroutes :tabe config/routes.rb
-
-" Edit factories
-command! Rfactories :e spec/factories.rb
-command! RTfactories :tabe spec/factories.rb
-
-" Local config
-if filereadable(".vimrc.local")
-  source .vimrc.local
+" Source custom vim from ~/.custom.vim
+if filereadable(expand("~/.custom.vim"))
+  source ~/.custom.vim
 endif
 
-" Use Ack instead of Grep when available
-if executable("ack")
-  set grepprg=ack\ -H\ --nogroup\ --nocolor
-endif
+" RABL syntax highlighting
+au BufRead,BufNewFile *.rabl setf ruby
 
-" Color scheme
-" colorscheme vividchalk
-highlight NonText guibg=#060606
-highlight Folded  guibg=#0A0A0A guifg=#9090D0
+"Matchit macro for ruby block text objects
+runtime macros/matchit.vim
 
-" Numbers
-set number
-set numberwidth=5
-
-" Snippets are activated by Shift+Tab
-let g:snippetsEmu_key = "<S-Tab>"
-
-" Tab completion options
-set wildmode=list:longest,list:full
-set complete=.,t
-
-" Tags
-let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
-
-" Window navigation
-nmap <C-J> <C-W><C-J>
-nmap <C-K> <C-W><C-K>
-nmap <C-H> <C-W><C-H>
-nmap <C-L> <C-W><C-L>
-nmap <F2> :mksession! ~/.vim_session <CR> " Quick write session with F2
-nmap <F3> :source ~/.vim_session <CR>     " And load session with F3
-
-" Align `|` in tables
-inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
-
-function! s:align()
-  let p = '^\s*|\s.*\s|\s*$'
-  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-    Tabularize/|/l1
-    normal! 0
-    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+" toggle syntastic error panel
+function! ToggleErrorPanel()
+  let old_window_count = winnr('$')
+  lclose
+  if old_window_count == winnr('$')
+    " Nothing was closed, open syntastic error location panel
+    Errors
   endif
 endfunction
 
-"if has("gui_running")
-  "set guioptions-=T
-  "set guioptions-=r
-  "set guioptions-=L
-
-  "set clipboard=unnamed
-  ""set gfn=Bitstream\ Vera\ Sans\ Mono:h24
-"endif
-
-nmap <leader>v :tabedit $MYVIMRC<CR>
-
-" git blame
-vmap <Leader>g :<C-U>!/opt/boxen/homebrew/bin/git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
-
-" align :
-" vmap <Leader>ac :Tabularize/:\zs<CR>
-
-" align =>
-" vmap <Leader>aa :Tabularize/=><CR>
-
-if has("autocmd")
-  autocmd bufwritepost .vimrc source $MYVIMRC
-endif
-
-" folding
-vmap <space> zf
-nmap <space> zd
-
-" do not highlight search terms
-set nohlsearch
-
-" disable syntastic warnings
-let g:syntastic_quiet_warnings = 0
-
-" set wrapscan for searching
-set wrapscan
+nnoremap <leader>er :call ToggleErrorPanel()<CR>

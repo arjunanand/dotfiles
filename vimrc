@@ -38,9 +38,7 @@ Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'groenewege/vim-less'
 Plugin 'pangloss/vim-javascript'
 Plugin 'jelera/vim-javascript-syntax'
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'nelstrom/vim-textobj-rubyblock'
-Plugin 'yaymukund/vim-rabl'
 Plugin 'tpope/vim-endwise'
 Plugin 'tomlion/vim-solidity'
 
@@ -57,6 +55,8 @@ Plugin 'mattn/webapi-vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tomtom/quickfixsigns_vim'
+Bundle 'thoughtbot/vim-rspec'
+Bundle 'jgdavey/tslime.vim'
 
 " Plugins you want just for yourself go here
 if filereadable(expand("~/.custom.vim-plugins"))
@@ -144,6 +144,8 @@ let html_number_lines = 1
 let html_ignore_folding = 1
 let html_use_css = 1
 let xml_use_xhtml = 1
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <Space> zf
 
 " When opening a file, always jump to the last cursor position
 autocmd BufReadPost *
@@ -323,3 +325,12 @@ function! ToggleErrorPanel()
 endfunction
 
 nnoremap <leader>er :call ToggleErrorPanel()<CR>
+
+"""""""""""""""""""""""""
+" Rspec Vim
+"""""""""""""""""""""""""
+let g:rspec_command = 'call Send_to_Tmux("docker-compose -f docker-compose-test.yaml run flowrida_rspec rspec {spec}\n")'
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>n :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>r :call RunAllSpecs()<CR>

@@ -1,14 +1,16 @@
 [alias]
 	st = status
-	ci = commit
+	ci = commit -S
 	br = branch
 	co = checkout
 	df = diff
 	dc = diff --cached
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>;%Creset' --abbrev-commit
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit
 	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 	ls = ls-files
+  pu = push -u origin
+  pmu = push -u myorigin
 
 # Show files ignored by git:
 	ign = ls-files -o -i --exclude-standard
@@ -29,14 +31,16 @@
 	untracked = cyan
 [core]
 	editor = vim
- excludesfile = /opt/boxen/config/git/gitignore
+	trustctime = false
 [branch]
 	autosetuprebase = always
 [push]
-	default = simple
+	default = current
+[merge]
+  ff = only
 [user]
-	name = yodarjun
-	email = arjun.anand84@gmail.com
+	name = --replace-all
+	name = Arjun Anand
 
 [hub]
 protocol = https
@@ -133,3 +137,10 @@ untracked = cyan
 
 [color "status"]
 added = yellow
+[gpg]
+	program = gpg
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
